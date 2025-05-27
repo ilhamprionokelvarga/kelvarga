@@ -1619,7 +1619,7 @@
     
     <div id="formContainer">
 
-      <form id="reservationForm" name="reservationForm"> <!-- onsubmit="onSubmitReservationFormNewAddress(event)"-->
+      <form id="reservationForm" name="reservationForm" onsubmit="onSubmitReservationFormNewAddress(event)"> <!-- -->
 
         <div id="headerSection" class="header" style="display: none;">
           <h1 class="kop-header-h1"><strong>📋 Form Reservasi</strong></h1>
@@ -2448,7 +2448,7 @@
     .onSubmitReservationFormNewAddressSubmission(formData);
   }
   ///////////////////////////////// Akhir Script untuk Submit Form /////////////////////////////////
-  </script> -->
+  </script> 
 
 
   <script>
@@ -2461,6 +2461,134 @@
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
     })
+  </script>
+  -->
+
+  
+    <script> /////////////////////// versi modifikasi ///////////////////////////
+    async function onSubmitReservationFormNewAddress(event) {
+      event.preventDefault();
+      console.log('Form pengiriman alamat baru disubmit.');
+
+      // Hapus atribut required dari input tersembunyi
+      const fieldsToRemoveRequired = [
+        'clientAddress',
+        'clientAddressNumber',
+        'clientRt',
+        'clientRw',
+        'clientSubDistrict',
+        'clientDistrict',
+        'clientCityRegency',
+        'clientProvince'
+      ];
+      fieldsToRemoveRequired.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.removeAttribute('required');
+      });
+
+      // Sembunyikan elemen yang tidak diperlukan
+      const elementsToHide = [
+        'reservationForm',
+        'successPage',
+        'successAlert',
+        'failurePage',
+        'failureAlertWarning',
+        'failureAlertDanger',
+        'mapContainer'
+      ];
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      // Tampilkan loadingPage dan animasi loading message
+      let currentStep = 0;
+      const loadingMessage = document.getElementById("loadingMessage");
+      document.getElementById('loadingPage').style.display = 'block';
+
+      const loadingSteps = [
+        "📦 Mengemas data pengajuan...",
+        "🔍 Memverifikasi informasi...",
+        "📅 Menjadwalkan layanan ke sistem...",
+        "📧 Mengirim konfirmasi ke email Anda..."
+      ];
+
+      function showNextStep() {
+        if (currentStep < loadingSteps.length) {
+          loadingMessage.style.opacity = 0;
+          setTimeout(() => {
+            loadingMessage.textContent = loadingSteps[currentStep];
+            loadingMessage.style.opacity = 1;
+            currentStep++;
+            setTimeout(showNextStep, 2000);
+          }, 200);
+        }
+      }
+      showNextStep();
+
+      // Ambil data form
+      const form = document.getElementById("reservationForm");
+      const formData = new FormData(form);
+
+      // Tambahkan nilai dari checkbox reservationRemarks
+      const reservationRemarks = Array.from(document.querySelectorAll('input[name="reservationRemarks"]:checked'))
+        .map((cb, i) => `${i + 1}. ${cb.value}`).join(', ');
+      formData.set('reservationRemarks', reservationRemarks);
+
+      // Tambahkan nilai dari checkbox serviceType
+      const serviceType = Array.from(document.querySelectorAll('input[name="serviceType"]:checked'))
+        .map((cb, i) => `${i + 1}. ${cb.value}`).join(', ');
+      formData.set('serviceType', serviceType);
+
+      // Tambahkan koordinat
+      formData.set('latitude', document.getElementById("latitude").value);
+      formData.set('longitude', document.getElementById("longitude").value);
+
+      // URL Web App GAS
+      const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwRXA_ivkLOQOjlDvi3MG42AKtJVBqSeWG_60pv6oGa3iR27ymKTf-CbCX8p2wFC-Z-5A/exec';
+
+      // Kirim data menggunakan fetch (POST + FormData)
+      fetch(GAS_WEB_APP_URL, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.group("Log dari Server Apps Script");
+          (result.logs || []).forEach(log => console.log(log));
+          console.groupEnd();
+
+          if (result.success) {
+            ['reservationForm','loadingPage','mapContainer','failurePage','failureAlertWarning','failureAlertDanger']
+              .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+            ['successPage','successAlert']
+              .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+
+            document.getElementById("successAlert").textContent = result.message || "Reservasi berhasil dikirim.";
+            form.reset();
+          } else {
+            ['reservationForm','loadingPage','mapContainer','successPage','successAlert']
+              .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+            ['failurePage','failureAlertWarning','failureAlertDanger']
+              .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+
+            const failureAlertDanger = document.getElementById("failureAlertDanger");
+            if (failureAlertDanger) failureAlertDanger.textContent = result.message || "Gagal memproses reservasi.";
+            form.reset();
+          }
+        })
+        .catch(error => {
+          ['reservationForm','successPage','loadingPage','mapContainer','successAlert']
+            .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+          ['failurePage','failureAlertDanger']
+            .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+
+          const failureAlertDanger = document.getElementById("failureAlertDanger");
+          if (failureAlertDanger) failureAlertDanger.textContent = "Terjadi kesalahan sistem atau koneksi saat memproses reservasi.";
+          console.error("Fetch Error:", error);
+          form.reset();
+        });
+    }
   </script>
 
 
