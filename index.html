@@ -28,6 +28,12 @@
             animation: spin 4s linear infinite;
         }
 
+        .container img {
+            min-width: 80%;
+            max-width: 500px; /* batas maksimal lebar gambar */
+            height: auto;
+        }
+
         .menu-button {
             min-height: 100px;
             font-size: 14px;
@@ -151,6 +157,10 @@
     <div class="d-flex justify-content-center align-items-center" style="height: 100vh; padding-top: 1rem; padding-bottom: 1rem;">
         <div class="container py-2 py-md-4 py-lg-5">
             <fieldset id="homeMenuSection" class="border p-4 bg-white shadow rounded">
+                <div class="containertext-center mb-4">
+                    <img src="https://raw.githubusercontent.com/ilhamprionokelvarga/kelvarga/main/mainLogo.png" alt="Main Logo" style="max-width: 200px; height: auto;">
+                </div>
+                
                 <div class="d-flex justify-content-center">
                     <legend class="w-auto px-3 py-1 fs-5 fw-semibold text-white bg-primary border rounded">
                     <i class="bi bi-house-door"></i> Home</legend>
@@ -158,7 +168,7 @@
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-4">
                     <div class="col">
-                    <button class="btn btn-outline-primary w-100 p-4 menu-button">
+                    <button class="btn btn-outline-primary w-100 p-4 menu-button" onclick="goToReservationForm()">
                         <i class="bi bi-calendar-plus fs-4"></i><br />Reservasi
                     </button>
                     </div>
@@ -206,20 +216,26 @@
     </div>
     </footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function goToReservationForm() {
+            window.location.href = ("https://raw.githubusercontent.com/ilhamprionokelvarga/kelvarga/main/reservationFormNewAddress.html");
+        }
+    </script>
 
-  <!-- Toggle Footer Script -->
-  <script>
-    ///////////////////////////////// Awal Script untuk Footer /////////////////////////////////
-    const switchInput = document.getElementById("checkNativeSwitch");
-    const footer = document.getElementById("footer");
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    switchInput.addEventListener("change", function () {
-        footer.classList.toggle("show", this.checked);
-    });
-    ///////////////////////////////// Akhir Script untuk Footer /////////////////////////////////
-  </script>
+    <!-- Toggle Footer Script -->
+    <script>
+        ///////////////////////////////// Awal Script untuk Footer /////////////////////////////////
+        const switchInput = document.getElementById("checkNativeSwitch");
+        const footer = document.getElementById("footer");
+
+        switchInput.addEventListener("change", function () {
+            footer.classList.toggle("show", this.checked);
+        });
+        ///////////////////////////////// Akhir Script untuk Footer /////////////////////////////////
+    </script>
 
 </body>
 </html>
