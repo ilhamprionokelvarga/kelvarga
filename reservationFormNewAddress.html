@@ -1914,7 +1914,7 @@
   </div>
 
   <script>
-    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec";
+    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec";
 
     const endpointMap = {
       "getReferenceRtrw": GAS_BASE_URL + "?action=getReferenceRtrw",
@@ -2059,7 +2059,7 @@
     console.log(`Memuat dropdown: ${selectId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -2103,7 +2103,7 @@
     console.log(`Memuat checkbox: ${containerId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -2449,6 +2449,168 @@
   }
   ///////////////////////////////// Akhir Script untuk Submit Form /////////////////////////////////
   </script>
+
+
+
+
+
+
+
+
+  <script>///////////////////////////////// SUBMISSION VERSI JS MURNI /////////////////////////////////
+  async function onSubmitReservationFormNewAddress(event) {
+    event.preventDefault();
+    console.log('Form pengiriman alamat baru disubmit.');
+
+    // Hapus atribut required dari input tersembunyi
+    const fieldsToRemoveRequired = [
+      'clientAddress',
+      'clientAddressNumber',
+      'clientRt',
+      'clientRw',
+      'clientSubDistrict',
+      'clientDistrict',
+      'clientCityRegency',
+      'clientProvince'
+    ];
+    fieldsToRemoveRequired.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.removeAttribute('required');
+    });
+
+    // Sembunyikan elemen yang tidak diperlukan
+    const elementsToHide = [
+      'reservationForm',
+      'successPage',
+      'successAlert',
+      'failurePage',
+      'failureAlertWarning',
+      'failureAlertDanger',
+      'mapContainer'
+    ];
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+
+    // Tampilkan loadingPage dan animasi loading message (kopi dari fungsi asli)
+    let currentStep = 0;
+    const loadingMessage = document.getElementById("loadingMessage");
+    document.getElementById('loadingPage').style.display = 'block';
+
+    const loadingSteps = [
+      "📦 Mengemas data pengajuan...",
+      "🔍 Memverifikasi informasi...",
+      "📅 Menjadwalkan layanan ke sistem...",
+      "📧 Mengirim konfirmasi ke email Anda..."
+    ];
+
+    function showNextStep() {
+      if (currentStep < loadingSteps.length) {
+        loadingMessage.style.opacity = 0;
+        setTimeout(() => {
+          loadingMessage.textContent = loadingSteps[currentStep];
+          loadingMessage.style.opacity = 1;
+          currentStep++;
+          setTimeout(showNextStep, 2000);
+        }, 200);
+      }
+    }
+    showNextStep();
+
+    // Ambil data form
+    const form = document.getElementById("reservationForm");
+    const formData = Object.fromEntries(new FormData(form).entries());
+
+    // Tangani checkbox reservationRemarks
+    const reservationRemarksCheckboxes = document.querySelectorAll('input[name="reservationRemarks"]:checked');
+    formData.reservationRemarks = Array.from(reservationRemarksCheckboxes).map((cb, i) => `${i+1}. ${cb.value}`).join(", ");
+
+    // Tangani checkbox serviceType
+    const serviceTypeCheckboxes = document.querySelectorAll('input[name="serviceType"]:checked');
+    formData.serviceType = Array.from(serviceTypeCheckboxes).map((cb, i) => `${i+1}. ${cb.value}`).join(", ");
+
+    // Koordinat
+    formData.latitude = document.getElementById("latitude").value;
+    formData.longitude = document.getElementById("longitude").value;
+
+    try {
+      // Ganti dengan URL web app GAS-mu
+      const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec";////////////////////////////////////////////
+
+      // Kirim data POST JSON ke GAS
+      const response = await fetch(GAS_WEB_APP_URL + '?function=submitReservation', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+      console.group("Log dari Server Apps Script");
+      (result.logs || []).forEach(log => console.log(log));
+      console.groupEnd();
+
+      if (result.success) {
+        // Sukses, atur UI
+        ['reservationForm','loadingPage','mapContainer','failurePage','failureAlertWarning','failureAlertDanger']
+          .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+        ['successPage','successAlert'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+
+        document.getElementById("successAlert").textContent = result.message || "Reservasi berhasil dikirim.";
+        form.reset();
+      } else {
+        // Gagal, atur UI gagal
+        ['reservationForm','loadingPage','mapContainer','successPage','successAlert']
+          .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+        ['failurePage','failureAlertWarning','failureAlertDanger']
+          .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+
+        const failureAlertDanger = document.getElementById("failureAlertDanger");
+        if(failureAlertDanger) failureAlertDanger.textContent = result.message || "Gagal memproses reservasi.";
+        form.reset();
+      }
+
+    } catch(error) {
+      // Kegagalan fetch / koneksi
+      ['reservationForm','successPage','loadingPage','mapContainer','successAlert']
+        .forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+      ['failurePage','failureAlertDanger'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'block'; });
+      const failureAlertDanger = document.getElementById("failureAlertDanger");
+      if(failureAlertDanger) failureAlertDanger.textContent = "Terjadi kesalahan sistem atau koneksi saat memproses reservasi.";
+      console.error("Fetch Error:", error);
+      form.reset();
+    }
+  }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
