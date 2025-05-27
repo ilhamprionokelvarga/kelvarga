@@ -1914,7 +1914,7 @@
   </div>
 
   <script>
-    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec";
+    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec";
 
     const endpointMap = {
       "getReferenceRtrw": GAS_BASE_URL + "?action=getReferenceRtrw",
@@ -2059,7 +2059,7 @@
     console.log(`Memuat dropdown: ${selectId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -2098,12 +2098,12 @@
 ///////////////////////////////// loadDropdownOptions Versi JS Murni /////////////////////////////////
   </script>
 
-  <script> ///////////////////////////////// Awal Script untuk Load Check Box /////////////////////////////////
+  <script> ///////////////////////////////// loadCheckboxOptions Versi JS Murni /////////////////////////////////
   async function loadCheckboxOptions(containerId, serverFunctionName) {
     console.log(`Memuat checkbox: ${containerId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbwOF53UZWlogpIhmQboFnNbre7qD9MXJVTmXMnQOYWSKnu7eakmV8cK2hzHXbMW1RAo8Q/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
