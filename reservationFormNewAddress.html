@@ -1619,7 +1619,7 @@
     
     <div id="formContainer">
 
-      <form id="reservationForm" name="reservationForm" onsubmit="onSubmitReservationFormNewAddress(event)">
+      <form id="reservationForm" name="reservationForm"> <!-- onsubmit="onSubmitReservationFormNewAddress(event)"-->
 
         <div id="headerSection" class="header" style="display: none;">
           <h1 class="kop-header-h1"><strong>📋 Form Reservasi</strong></h1>
@@ -1627,7 +1627,7 @@
 
         <fieldset id="serviceTypeSection" class="form-section" style="display: none;">
           <legend>🛠️ Pilih Layanan</legend>
-          <div id="serviceType" name="serviceType"></div><br>
+          <input id="serviceType" name="serviceType"></input><br>
             <div class="form-actions">
               <button type="button" onclick="goToSection('quantitySection')"> > </button>
             </div>
@@ -1681,7 +1681,7 @@
 
         <fieldset id="reservationRemarksSection" class="form-section" style="display: none">
           <legend>📝 Catatan Pelanggan</legend>
-          <div id="reservationRemarks" name="reservationRemarks"></div>
+          <input id="reservationRemarks" name="reservationRemarks"></div>
           <br>
           <div class="flex-container">
             <div class="form-group">
