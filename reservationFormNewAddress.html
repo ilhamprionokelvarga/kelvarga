@@ -1699,12 +1699,12 @@
               <div class="flex-container">
                   <div class="form-group">
                       <label for="clientAddress"></label>
-                      <input type="text" id="clientAddress" name="clientAddress" placeholder="Alamat" required>
+                      <input type="text" id="clientAddress" name="clientAddress" placeholder="Alamat" >
                   </div>
 
                   <div class="form-group">
                       <label for="clientAddressNumber"></label>
-                      <input type="text" id="clientAddressNumber" name="clientAddressNumber" placeholder="No. Rumah / Ruangan" required>
+                      <input type="text" id="clientAddressNumber" name="clientAddressNumber" placeholder="No. Rumah / Ruangan" >
                   </div>
 
                   <div class="form-group">
@@ -1716,24 +1716,24 @@
               <div class="flex-container">
                 <div class="form-group">
                     <label for="clientRt"></label>
-                    <select id="clientRt" name="clientRt" class="form-control" style="width: 100%" placeholder="RT" required></select>
+                    <select id="clientRt" name="clientRt" class="form-control" style="width: 100%" placeholder="RT" ></select>
                 </div>
 
                 <div class="form-group">
                     <label for="clientRw"></label>
-                    <select id="clientRw" name="clientRw" class="form-control" style="width: 100%" placeholder="RW" required></select>
+                    <select id="clientRw" name="clientRw" class="form-control" style="width: 100%" placeholder="RW" ></select>
                 </div>
               </div>
 
               <div class="flex-container">
                 <div class="form-group">
                     <label for="clientSubDistrict"></label>
-                    <input type="text" id="clientSubDistrict" name="clientSubDistrict" placeholder="Kelurahan" required>
+                    <input type="text" id="clientSubDistrict" name="clientSubDistrict" placeholder="Kelurahan" >
                 </div>
 
                 <div class="form-group">
                     <label for="clientDistrict"></label>
-                    <input type="text" id="clientDistrict" name="clientDistrict" placeholder="Kecamatan" required>
+                    <input type="text" id="clientDistrict" name="clientDistrict" placeholder="Kecamatan" >
                 </div>
               </div>
             </div>
@@ -1741,12 +1741,12 @@
             <div class="flex-container">
                 <div class="form-group">
                   <label for="clientCityRegency"></label>
-                  <select id="clientCityRegency" name="clientCityRegency" class="form-control"  placeholder="Kota / Kabupaten" required style="width: 100%"></select>
+                  <select id="clientCityRegency" name="clientCityRegency" class="form-control"  placeholder="Kota / Kabupaten"  style="width: 100%"></select>
                 </div>
 
                 <div class="form-group">
                     <label for="clientProvince"></label>
-                    <select id="clientProvince" name="clientProvince" class="form-control" placeholder="Provinsi" required style="width: 100%"></select>
+                    <select id="clientProvince" name="clientProvince" class="form-control" placeholder="Provinsi"  style="width: 100%"></select>
                 </div>
             </div>
 
@@ -1780,11 +1780,11 @@
               <div class="flex-container" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; text-align: center;">
                 <div class="form-group">
                     <label for="executionDate">Tanggal</label>
-                    <input type="date" id="executionDate" name="executionDate" required>
+                    <input type="date" id="executionDate" name="executionDate" >
                 </div>
                 <div class="form-group">
                   <label for="executionTime">Jam</label>
-                  <input type="time" id="executionTime" name="executionTime" required>
+                  <input type="time" id="executionTime" name="executionTime" >
                 </div>
               </div>
               <div class="flex-container">
@@ -1801,17 +1801,17 @@
               <div class="flex-container">
                   <div class="form-group">
                       <label for="clientName"></label>
-                      <input type="text" id="clientName" name="clientName" placeholder="🧑 Nama Lengkap" required>
+                      <input type="text" id="clientName" name="clientName" placeholder="🧑 Nama Lengkap" >
                   </div>
 
                   <div class="form-group">
                       <label for="clientPhone"></label>
-                      <input type="tel" id="clientPhone" name="clientPhone" pattern="[0-9]+" placeholder="📱 08********89" required>
+                      <input type="tel" id="clientPhone" name="clientPhone" pattern="[0-9]+" placeholder="📱 08********89" >
                   </div>
 
                   <div class="form-group">
                       <label for="clientEmail"></label>
-                      <input type="email" id="clientEmail" name="clientEmail" placeholder="📧 E-Mail" required>
+                      <input type="email" id="clientEmail" name="clientEmail" placeholder="📧 E-Mail" >
                   </div>
               </div>
           </fieldset>
@@ -2192,7 +2192,7 @@
     event.preventDefault();
     console.log('Form pengiriman alamat baru disubmit.');
 
-    // Hapus atribut required dari input yang tersembunyi
+    // Hapus atribut  dari input yang tersembunyi
     const fieldsToRemoveRequired = [
       'clientAddress',
       'clientAddressNumber',
