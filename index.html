@@ -100,7 +100,7 @@
             bottom: 0%;
         }
         
-        .footer h5 {
+        .footer h6 {
             border: #007bff 3px solid;
             background-color: #007bff;
             color: white;
@@ -157,43 +157,68 @@
     <div class="d-flex justify-content-center align-items-center" style="height: 100vh; padding-top: 1rem; padding-bottom: 1rem;">
         <div class="container py-2 py-md-4 py-lg-5">
             <fieldset id="homeMenuSection" class="border p-4 bg-white shadow rounded">
+
                 <div class="d-flex justify-content-center containertext-center mb-4">
                     <img src="https://raw.githubusercontent.com/ilhamprionokelvarga/kelvarga/main/mainLogo.png" alt="Main Logo" style="max-width: 200px; height: auto;">
                 </div>
                 
-                <div class="d-flex justify-content-center">
+            <!-- <div class="d-flex justify-content-center">
                     <legend class="w-auto px-3 py-1 fs-5 fw-semibold text-white bg-primary border rounded">
                     <i class="bi bi-house-door"></i> Home</legend>
+                </div> -->
+
+                <div id="containerMenuButton" class="row row-cols-2 row-cols-sm-2 row-cols-md-4 g-3 mt-4">
+                    
+                    <div id="menuButtonReservation" class="col d-flex">
+                        <button class="btn btn-outline-primary w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-calendar-plus fs-4"></i><br />Reservasi
+                        </button>
+                    </div>
+
+                    <div id="menuButtonReschedule" class="col d-flex">
+                        <button class="btn btn-outline-warning w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-arrow-repeat fs-4"></i><br />Jadwal Ulang
+                        </button>
+                    </div>
+
+                    <div id="menuButtonCancellation" class="col d-flex">
+                        <button class="btn btn-outline-danger w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-x-circle fs-4"></i><br />Pembatalan
+                        </button>
+                    </div>
+
+                    <div id="menuButtonCatalogue" class="col d-flex">
+                        <button class="btn btn-outline-success w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-journal-bookmark fs-4"></i><br />Katalog Harga
+                        </button>
+                    </div>
                 </div>
 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-4">
-                    <div class="col">
-                    <button class="btn btn-outline-primary w-100 p-4 menu-button" onclick="goToReservationForm()">
-                        <i class="bi bi-calendar-plus fs-4"></i><br />Reservasi
-                    </button>
+                <!-- Pop Up Option untuk reservasi-->
+                <div id="popUpOptionReservation" class="row row-cols-2 row-cols-sm-2 row-cols-md-4 g-3 mt-4" style="display: none;">
+                    <div id="registerNewAddress" class="col d-flex">
+                        <button id="registerNewAddressButton" class="btn btn-outline-primary w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-house-door fs-4"></i><br />Mendaftarkan Alamat Baru
+                        </button>
                     </div>
-
-                    <div class="col">
-                    <button class="btn btn-outline-warning w-100 p-4 menu-button">
-                        <i class="bi bi-arrow-repeat fs-4"></i><br />Jadwal Ulang
-                    </button>
-                    </div>
-
-                    <div class="col">
-                    <button class="btn btn-outline-danger w-100 p-4 menu-button">
-                        <i class="bi bi-x-circle fs-4"></i><br />Pembatalan
-                    </button>
-                    </div>
-
-                    <div class="col">
-                    <button class="btn btn-outline-success w-100 p-4 menu-button">
-                        <i class="bi bi-journal-bookmark fs-4"></i><br />Katalog Harga
-                    </button>
+                    <div id="registerExistingAddress" class="col d-flex">
+                        <button id="registerExistingAddressButton" class="btn btn-outline-success w-100 p-4 menu-button d-flex flex-column justify-content-center align-items-center h-100"
+                            onclick="goToReservationForm()">
+                            <i class="bi bi-house-door fs-4"></i><br />Gunakan Alamat Terdaftar
+                        </button>
                     </div>
                 </div>
+
             </fieldset>
         </div>
     </div>
+
+    
 
     <!-- Footer Switch Bar -->
     <div class="footer-switch-bar form-check form-switch align-items-center">
@@ -204,7 +229,7 @@
     <!-- Footer -->
     <footer id="footer" class="footer">
     <div class="footer-content">
-        <h5 class="mb-1">PT Ruang Kelvarga Sejuk Abadi</h5>
+        <h6 class="mb-1">PT Ruang Kelvarga Sejuk Abadi</h6>
         <p class="mb-1">Link Curug No.127, Rawa Arum, Gerogol, Cilegon, Banten 42436</p>
         <div>
         <a href="https://www.kelvarga.com" target="_blank" class="text-decoration-none">www.kelvarga.com</a><br>
