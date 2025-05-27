@@ -1914,7 +1914,7 @@
   </div>
 
   <script>
-    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbwjgWcTssC-DoGg5nTgU3jy1_x06cw22xrm0u10Whk0-Va1vUxSnRdqn6IB0k8ShVAW/exec";
+    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec";
 
     const endpointMap = {
       "getReferenceRtrw": GAS_BASE_URL + "?action=getReferenceRtrw",
@@ -2055,133 +2055,111 @@
   </script>
 
   <script> ///////////////////////////////// loadDropdownOptions Versi JS Murni /////////////////////////////////
-    function loadDropdownOptions(selectId, serverFunctionName, placeholder = "-- Pilih --") {
-      const url = endpointMap[serverFunctionName];
-      if (!url) {
-        console.error(`Endpoint untuk fungsi server '${serverFunctionName}' tidak ditemukan.`);
-        return;
+    async function loadDropdownOptions(selectId, serverFunctionName, placeholder = "-- Pilih --") {
+    console.log(`Memuat dropdown: ${selectId} dari fungsi: ${serverFunctionName}`);
+
+    try {
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec?function=${serverFunctionName}`);
+      const data = await response.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("Data bukan array");
       }
-      console.log(`Memuat dropdown: ${selectId} dari endpoint: ${url}`);
 
-      fetch(url)
-        .then(response => {
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          return response.json();
-        })
-        .then(options => {
-          console.log(`Menerima ${options.length} opsi untuk dropdown: ${selectId}`);
+      const select = document.getElementById(selectId);
+      if (!select) return;
 
-          const select = document.getElementById(selectId);
-          if (!select) {
-            console.warn(`Element dengan ID ${selectId} tidak ditemukan.`);
-            return;
-          }
+      select.innerHTML = "";
 
-          select.innerHTML = "";
-          select.style.color = "#888";
+      const placeholderOption = document.createElement("option");
+      placeholderOption.value = "";
+      placeholderOption.textContent = placeholder;
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      placeholderOption.classList.add("placeholder-option");
+      select.appendChild(placeholderOption);
 
-          const placeholderOption = document.createElement("option");
-          placeholderOption.value = "";
-          placeholderOption.textContent = placeholder;
-          placeholderOption.disabled = true;
-          placeholderOption.selected = true;
-          placeholderOption.classList.add("placeholder-option");
-          select.appendChild(placeholderOption);
+      data.forEach((optionValue) => {
+        const option = document.createElement("option");
+        option.value = optionValue;
+        option.textContent = optionValue;
+        select.appendChild(option);
+      });
 
-          options.forEach(optionValue => {
-            const option = document.createElement("option");
-            option.value = optionValue;
-            option.textContent = optionValue;
-            select.appendChild(option);
-          });
+      select.addEventListener("change", () => {
+        select.style.color = select.value === "" ? "#888" : "#000";
+      });
 
-          select.addEventListener("change", () => {
-            select.style.color = select.value === "" ? "#888" : "#000";
-          });
-
-          console.log(`Dropdown ${selectId} siap digunakan.`);
-        })
-        .catch(error => {
-          console.error("Gagal memuat opsi dropdown:", error);
-        });
-    }///////////////////////////////// loadDropdownOptions Versi JS Murni /////////////////////////////////
+      select.style.color = "#888";
+    } catch (error) {
+      console.error(`Gagal memuat opsi dropdown: ${error.message}`);
+    }
+  }
+///////////////////////////////// loadDropdownOptions Versi JS Murni /////////////////////////////////
   </script>
 
   <script> ///////////////////////////////// Awal Script untuk Load Check Box /////////////////////////////////
-  function loadCheckboxOptions(containerId, serverFunctionName) {
-    const url = endpointMap[serverFunctionName];
-    if (!url) {
-      console.error(`Endpoint untuk fungsi server '${serverFunctionName}' tidak ditemukan.`);
-      return;
-    }
+  async function loadCheckboxOptions(containerId, serverFunctionName) {
+    console.log(`Memuat checkbox: ${containerId} dari fungsi: ${serverFunctionName}`);
 
-    console.log(`Memuat checkbox: ${containerId} dari endpoint: ${url}`);
+    try {
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbwnhlTxuiZRnsgbXwXiExyyQb282ALo6NYg5QkkymBFq0Mq4ZeQCUhrOdoC70x41MJ7/exec?function=${serverFunctionName}`);
+      const data = await response.json();
 
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-      })
-      .then(options => {
-        console.log(`Menerima ${options.length} opsi untuk checkbox: ${containerId}`);
+      if (!Array.isArray(data)) {
+        throw new Error("Data bukan array");
+      }
 
-        const container = document.getElementById(containerId);
-        if (!container) {
-          console.warn(`Element dengan ID ${containerId} tidak ditemukan.`);
-          return;
-        }
+      const container = document.getElementById(containerId);
+      if (!container) return;
 
-        container.innerHTML = "";
+      container.innerHTML = "";
+      container.style.display = "grid";
+      container.style.gridTemplateColumns = "repeat(2, 1fr)";
+      container.style.gap = "12px";
 
-        // Styling container checkbox
-        container.style.display = "grid";
-        container.style.gridTemplateColumns = "repeat(2, 1fr)";
-        container.style.gap = "12px";
+      data.forEach((optionValue) => {
+        const label = document.createElement("label");
+        label.textContent = optionValue;
+        label.style.cssText = `
+          font-size: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: left;
+          padding: 10px;
+          border-radius: 15px;
+          cursor: pointer;
+          background-color: #F3F2F2;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        `;
 
-        options.forEach(optionValue => {
-          const label = document.createElement("label");
-          label.style.fontSize = "30px";
-          label.style.display = "flex";
-          label.style.alignItems = "center";
-          label.style.justifyContent = "left";
-          label.style.padding = "10px";
-          label.style.borderRadius = "15px";
-          label.style.cursor = "pointer";
-          label.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
-          label.style.backgroundColor = "#F3F2F2";
+        label.onmouseover = () => {
+          label.style.transform = "scale(1.05)";
+          label.style.boxShadow = "0 6px 15px rgba(0,0,0,0.25)";
+        };
+        label.onmouseout = () => {
+          label.style.transform = "scale(1)";
           label.style.boxShadow = "0 2px 5px rgba(0,0,0,0.15)";
+        };
 
-          label.onmouseover = () => {
-            label.style.transform = "scale(1.05)";
-            label.style.boxShadow = "0 6px 15px rgba(0,0,0,0.25)";
-          };
-          label.onmouseout = () => {
-            label.style.transform = "scale(1)";
-            label.style.boxShadow = "0 2px 5px rgba(0,0,0,0.15)";
-          };
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = containerId;
+        checkbox.value = optionValue;
+        checkbox.style.marginRight = "8px";
 
-          const checkbox = document.createElement("input");
-          checkbox.type = "checkbox";
-          checkbox.name = containerId;
-          checkbox.value = optionValue;
-          checkbox.style.marginRight = "8px";
-
-          checkbox.addEventListener("change", () => {
-            label.style.backgroundColor = checkbox.checked ? "#FFD580" : "#F3F2F2";
-          });
-
-          label.appendChild(checkbox);
-          label.appendChild(document.createTextNode(optionValue));
-          container.appendChild(label);
-
-          console.log(`Ditambahkan checkbox dengan nilai: "${optionValue}" ke container: ${containerId}`);
+        checkbox.addEventListener("change", () => {
+          label.style.backgroundColor = checkbox.checked ? "#FFD580" : "#F3F2F2";
         });
 
-        console.log(`Checkbox ${containerId} siap digunakan.`);
-      })
-      .catch(error => {
-        console.error("Gagal memuat opsi checkbox:", error);
+        label.prepend(checkbox);
+        container.appendChild(label);
       });
+
+    } catch (error) {
+      console.error(`Gagal memuat opsi checkbox: ${error.message}`);
+    }
   }///////////////////////////////// Akhir Script untuk Load Check Box /////////////////////////////////
   </script>
 
