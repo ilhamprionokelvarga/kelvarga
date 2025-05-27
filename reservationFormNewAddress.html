@@ -1619,7 +1619,7 @@
     
     <div id="formContainer">
 
-      <form id="reservationForm" onsubmit="onSubmitReservationFormNewAddress(event)">
+      <form id="reservationForm" name="reservationForm" onsubmit="onSubmitReservationFormNewAddress(event)">
 
         <div id="headerSection" class="header" style="display: none;">
           <h1 class="kop-header-h1"><strong>📋 Form Reservasi</strong></h1>
@@ -1627,7 +1627,7 @@
 
         <fieldset id="serviceTypeSection" class="form-section" style="display: none;">
           <legend>🛠️ Pilih Layanan</legend>
-          <div id="serviceType"></div><br>
+          <div id="serviceType" name="serviceType"></div><br>
             <div class="form-actions">
               <button type="button" onclick="goToSection('quantitySection')"> > </button>
             </div>
@@ -1681,7 +1681,7 @@
 
         <fieldset id="reservationRemarksSection" class="form-section" style="display: none">
           <legend>📝 Catatan Pelanggan</legend>
-          <div id="reservationRemarks"></div>
+          <div id="reservationRemarks" name="reservationRemarks"></div>
           <br>
           <div class="flex-container">
             <div class="form-group">
@@ -2451,12 +2451,22 @@
   </script> -->
 
 
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzJvUvOlpWpwmc3dcMYlysGOha8Q3sdqcaUDTOyXXS2PyV1QjBx1dLgkSo6qH4GdUGQvg/exec'
+    const form = document.forms['reservationForm']
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => console.log('Success!', response))
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
 
 
 
 
-
-
+  <!-- 
   <script>///////////////////////////////// SUBMISSION VERSI JS MURNI /////////////////////////////////
   async function onSubmitReservationFormNewAddress(event) {
     event.preventDefault();
@@ -2585,6 +2595,7 @@
     }
   }
   </script>
+  -->
 
 
 
