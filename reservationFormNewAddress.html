@@ -1914,7 +1914,7 @@
   </div>
 
   <script>
-    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec";
+    const GAS_BASE_URL = "https://script.google.com/macros/s/AKfycbx9wcRUkc4PjaGf8yuQePxTAZP9Qo7tqWWR9kFlikupJ7ZA0XmQVNKWh4Bw8GtDYgKCKg/exec";
 
     const endpointMap = {
       "getReferenceRtrw": GAS_BASE_URL + "?action=getReferenceRtrw",
@@ -2059,7 +2059,7 @@
     console.log(`Memuat dropdown: ${selectId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbx9wcRUkc4PjaGf8yuQePxTAZP9Qo7tqWWR9kFlikupJ7ZA0XmQVNKWh4Bw8GtDYgKCKg/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -2103,7 +2103,7 @@
     console.log(`Memuat checkbox: ${containerId} dari fungsi: ${serverFunctionName}`);
 
     try {
-      const response = await fetch(`https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec?function=${serverFunctionName}`);
+      const response = await fetch(`https://script.google.com/macros/s/AKfycbx9wcRUkc4PjaGf8yuQePxTAZP9Qo7tqWWR9kFlikupJ7ZA0XmQVNKWh4Bw8GtDYgKCKg/exec?function=${serverFunctionName}`);
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -2186,7 +2186,7 @@
 
 
 
-
+<!-->
   <script> ///////////////////////////////// Awal Script untuk Submit Form /////////////////////////////////
   function onSubmitReservationFormNewAddress(event) {
     event.preventDefault();
@@ -2448,7 +2448,7 @@
     .onSubmitReservationFormNewAddressSubmission(formData);
   }
   ///////////////////////////////// Akhir Script untuk Submit Form /////////////////////////////////
-  </script>
+  </script> -->
 
 
 
@@ -2536,7 +2536,7 @@
 
     try {
       // Ganti dengan URL web app GAS-mu
-      const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyhVGZu-sxZumw-5lB04HBev3tg8NhtqNxFdOVs_xDD2ont7xD6CF4lDead1rgD1y0WcQ/exec";////////////////////////////////////////////
+      const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx9wcRUkc4PjaGf8yuQePxTAZP9Qo7tqWWR9kFlikupJ7ZA0XmQVNKWh4Bw8GtDYgKCKg/exec";////////////////////////////////////////////
 
       // Kirim data POST JSON ke GAS
       const response = await fetch(GAS_WEB_APP_URL + '?function=submitReservation', {
